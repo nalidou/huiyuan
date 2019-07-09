@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jujingyun.huiyuan.dao.UserDao" >
+
+    <select id="getByName" resultType="com.jujingyun.huiyuan.entity.User" parameterType="String">
+        SELECT id, name, password, info FROM user WHERE name=#{name}
+    </select>
+
+    <insert id="addOne" parameterType="com.jujingyun.huiyuan.entity.User" >
+        INSERT INTO user (name, password, info) VALUE(#{name}, #{password}, #{info})
+    </insert>
+
+
+</mapper>
