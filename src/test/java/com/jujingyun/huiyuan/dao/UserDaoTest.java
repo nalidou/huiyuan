@@ -27,7 +27,7 @@ public class UserDaoTest {
         user.setName("吴兆跃2");
         user.setPassword("21331ZWqd!.';.'");
         user.setInfoOf("createTime", System.currentTimeMillis());
-        //System.out.println(user.toJSONObject());
+        System.out.println(user.toJSONObject());
         //System.out.println(userDao.getByName("吴兆跃").getInfoOf("createTime"));
         System.out.println(userDao.addOne(user));
     }
