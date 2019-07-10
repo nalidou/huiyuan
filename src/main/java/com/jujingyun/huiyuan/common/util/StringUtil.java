@@ -1,4 +1,4 @@
-package com.jujingyun.huiyuan.util;
+package com.jujingyun.huiyuan.common.util;
 
 public class StringUtil {
 

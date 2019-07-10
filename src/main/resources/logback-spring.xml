@@ -12,16 +12,17 @@
     <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger:%line{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
 
     <!-- Appender to log to console 需要输出到console可把注释打开 -->
-    <!--<appender name="console" class="ch.qos.logback.core.ConsoleAppender">-->
-        <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
-            <!--&lt;!&ndash; Minimum logging level to be presented in the console logs&ndash;&gt;-->
-            <!--<level>DEBUG</level>-->
-        <!--</filter>-->
-        <!--<encoder>-->
-            <!--<pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
-            <!--<charset>utf8</charset>-->
-        <!--</encoder>-->
-    <!--</appender>-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- Minimum logging level to be presented in the console logs-->
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+    <!-- end Appender to log to console 需要输出到console可把注释打开 -->
 
     <!-- 本系统的日志 -->
     <appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -52,7 +53,8 @@
     <root level="INFO">
 
         <!-- 输出到console 需要输出到console可把注释打开-->
-        <!--<appender-ref ref="console"/>-->
+        <appender-ref ref="console"/>
+        <!-- end 输出到console 需要输出到console可把注释打开-->
 
         <!-- 输出到文件 -->
         <appender-ref ref="logfile"/>

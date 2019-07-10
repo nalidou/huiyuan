@@ -1,16 +1,15 @@
-package com.jujingyun.huiyuan.entity;
+package com.jujingyun.huiyuan.common.entity;
 
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * 用户实体类
+ * 商会职务实体类
  */
-public class User extends AbstractEntity{
+public class MemberJob extends AbstractEntity{
 
-    private String name = "";
-    private String password = "";
+    private String name;
 
-    public User(){}
+    public MemberJob(){}
 
     public String getName() {
         return name;
@@ -19,21 +18,11 @@ public class User extends AbstractEntity{
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public JSONObject toJSONObject() {
         JSONObject json = new JSONObject();
         json.put("id", getId());
         json.put("name", getName());
-        json.put("passowrd", getPassword());
         json.put("info", getInfo());
         return json;
     }

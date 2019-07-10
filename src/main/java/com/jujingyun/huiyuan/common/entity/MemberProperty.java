@@ -1,4 +1,4 @@
-package com.jujingyun.huiyuan.entity;
+package com.jujingyun.huiyuan.common.entity;
 
 import com.alibaba.fastjson.JSONObject;
 
