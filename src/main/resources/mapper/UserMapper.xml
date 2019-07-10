@@ -2,20 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jujingyun.huiyuan.dao.UserDao" >
 
-    <select id="getByName" resultType="com.jujingyun.huiyuan.common.entity.User" parameterType="String">
-        SELECT id, name, password, info FROM user WHERE name=#{name}
+    <select id="getByAccount" resultType="com.jujingyun.huiyuan.common.entity.User" parameterType="String">
+        SELECT id, account, password, level, isUsed, createTime, info
+        FROM user WHERE account=#{account}
+    </select>
+
+    <select id="getAll" resultType="com.jujingyun.huiyuan.common.entity.User">
+        SELECT id, account, password, level, isUsed, createTime, info
+        FROM user ORDER BY createTime DESC
     </select>
 
     <insert id="addOne" parameterType="com.jujingyun.huiyuan.common.entity.User" >
-        INSERT INTO user (name, password, info) VALUE(#{name}, #{password}, #{info})
+        INSERT INTO user (account, password, level, isUsed, createTime, info)
+        VALUE(#{account}, #{password}, #{level}, #{isUsed}, #{createTime}, #{info})
     </insert>
 
-    <select id="getAll" resultType="com.jujingyun.huiyuan.common.entity.User">
-        SELECT id, name, password, info FROM user
-    </select>
-
     <update id="updateOne" parameterType="com.jujingyun.huiyuan.common.entity.User">
-        UPDATE user SET name=#{name}, password=#{password}, info=#{info} WHERE id=#{id}
+        UPDATE user
+        SET account=#{account},
+            password=#{password},
+            level=#{level},
+            isUsed=#{isUsed},
+            createTime=#{createTime},
+            info=#{info}
+        WHERE id=#{id}
     </update>
 
 

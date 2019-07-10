@@ -1,6 +1,7 @@
 package com.jujingyun.huiyuan.dao;
 
 import com.jujingyun.huiyuan.HuiyuanApplication;
+import com.jujingyun.huiyuan.common._enum.EntityInfoEnum;
 import com.jujingyun.huiyuan.common.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,13 +22,14 @@ public class UserDaoTest {
 
     @Test
     public void test() {
-        User user = new User();
-        user.setName("吴兆跃2");
-        user.setPassword("21331ZWqd!.';.'");
-        user.setInfoOf("createTime", System.currentTimeMillis());
-        System.out.println(user.toJSONObject());
-        System.out.println(userDao.getByName("吴兆跃2").getInfoOf("createTime"));
+        //User user = User.generateNewUser("吴赵越1","123");
+        //user.setInfoOf(EntityInfoEnum.UPDATE_TIME.getName(), System.currentTimeMillis());
         //System.out.println(userDao.addOne(user));
+
+        User u = userDao.getAll().get(0);
+        u.setInfoOf("aa","bb");
+        System.out.println(userDao.updateOne(u));
+        //System.out.println(userDao.getByAccount("吴赵越1").toJSONObject());
     }
 
 }
