@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 public class MemberJob extends AbstractEntity{
 
     private String name;
+    private long userId;
 
     public MemberJob(){}
 
@@ -18,12 +19,24 @@ public class MemberJob extends AbstractEntity{
     public void setName(String name) {
         this.name = name;
     }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
     @Override
     public JSONObject toJSONObject() {
         JSONObject json = new JSONObject();
         json.put("id", getId());
         json.put("name", getName());
         json.put("info", getInfo());
+        json.put("createTime", getCreateTime());
+        json.put("createTimeStr", getCreateTimeStr());
+        json.put("userId", getUserId());
         return json;
     }
 }

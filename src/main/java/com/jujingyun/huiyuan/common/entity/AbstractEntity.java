@@ -46,7 +46,7 @@ public abstract class AbstractEntity {
 
     public void setCreateTimeStr(String createTimeStr) throws ParseException {
         this.createTimeStr = createTimeStr;
-        this.createTime = TimeUtil.timeFormat.parse(createTimeStr).getTime();
+        this.createTime = TimeUtil.timeStr2Time(createTimeStr);
     }
 
     public long getCreateTime() {
@@ -55,7 +55,7 @@ public abstract class AbstractEntity {
 
     public void setCreateTime(long createTime) {
         this.createTime = createTime;
-        this.createTimeStr = TimeUtil.timeFormat.format(new Date(createTime));
+        this.createTimeStr = TimeUtil.time2TimeStr(createTime);
     }
 
     public abstract JSONObject toJSONObject();
