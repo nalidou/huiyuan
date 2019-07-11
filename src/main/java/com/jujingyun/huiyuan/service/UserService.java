@@ -29,7 +29,7 @@ public class UserService {
     public User login(String account, String password) {
         try {
             User user = userDao.getByAccount(account);
-            if (user != null && user.getPassword().equals(password)) {
+            if (user != null && user.getPassword().equals(password) && user.getIsUsed()==1) {
                 return user;
             }
         } catch (Exception e) {

@@ -27,10 +27,15 @@ public class TimeUtilTest {
         //System.out.println(TimeUtil.sdf.format(new Date()));
         //System.out.println(TimeUtil.sdf.format(new Date()));
 
-        System.out.println(getSexStr(1));
-        System.out.println(getSexStr(2));
-        System.out.println(getSexStr(3));
+        //ystem.out.println(getSexStr(1));
+        //System.out.println(getSexStr(2));
+        //System.out.println(getSexStr(3));
 
+        //System. out. println(11 % 3 * 2);
+
+        int x = 1;
+        float y = 2;
+        System.out.println(x/y);
     }
 
     public static String getSexStr(int sex) {
