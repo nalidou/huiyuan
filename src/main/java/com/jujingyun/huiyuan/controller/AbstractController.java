@@ -10,7 +10,17 @@ public abstract class AbstractController {
     public void addError(JSONObject json, String str) {
         json.put("responseCode", ErrorCodeEnum.ERROR.getCode());
         json.put("responseMsg", ErrorCodeEnum.ERROR.getMsg());
+        json.put("responseDetail", str);
     }
 
+    public void addSuccess(JSONObject json) {
+        json.put("responseCode", ErrorCodeEnum.SUCCESS.getCode());
+        json.put("responseMsg", ErrorCodeEnum.SUCCESS.getMsg());
+    }
+
+    public void addFailed(JSONObject json) {
+        json.put("responseCode", ErrorCodeEnum.FAILED.getCode());
+        json.put("responseMsg", ErrorCodeEnum.FAILED.getMsg());
+    }
 
 }

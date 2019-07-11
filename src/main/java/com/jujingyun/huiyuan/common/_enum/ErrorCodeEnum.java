@@ -6,11 +6,12 @@ package com.jujingyun.huiyuan.common._enum;
 public enum ErrorCodeEnum {
 
     SUCCESS(200, "执行成功"),
-    ERROR(500, "系统异常");
+    ERROR(500, "系统异常"),
+    FAILED(501, "操作失败");
 
     private int code;
     private String msg;
-    ErrorCodeEnum(int code,String msg){
+    ErrorCodeEnum(int code, String msg){
         this.code = code;
         this.msg = msg;
     }

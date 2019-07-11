@@ -26,10 +26,10 @@ public class UserDaoTest {
         //user.setInfoOf(EntityInfoEnum.UPDATE_TIME.getName(), System.currentTimeMillis());
         //System.out.println(userDao.addOne(user));
 
-        User u = userDao.getAll().get(0);
-        u.setInfoOf("aa","bb");
-        System.out.println(userDao.updateOne(u));
-        //System.out.println(userDao.getByAccount("吴赵越1").toJSONObject());
+       // User u = userDao.getAll().get(0);
+        //u.setInfoOf("aa","bb");
+        //System.out.println(userDao.updateOne(u));
+        System.out.println(userDao.getByAccount("吴赵越1")==null);
     }
 
 }
