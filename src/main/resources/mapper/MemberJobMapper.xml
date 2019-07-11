@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jujingyun.huiyuan.dao.MemberJobDao" >
+
+    <select id="getListByUserId" resultType="com.jujingyun.huiyuan.common.entity.MemberJob" parameterType="long">
+        SELECT id, name, userId, createTime, info
+        FROM member_job WHERE userId=#{userId} ORDER BY createTime DESC
+    </select>
+
+    <insert id="addOne" parameterType="com.jujingyun.huiyuan.common.entity.MemberJob" >
+        INSERT INTO member_job (name, userId, createTime, info)
+        VALUE(#{name}, #{userId}, #{createTime}, #{info})
+    </insert>
+
+    <delete id="delOne" parameterType="long">
+        DELETE FROM member_job WHERE id=#{id}
+    </delete>
+
+</mapper>

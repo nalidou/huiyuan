@@ -39,8 +39,16 @@ public class Member extends AbstractEntity{
     private String memo = "";//备注
     private String operaRecord = "";//操作记录,操作的人
 
-    private int isDelete = 1;// 删除标记 0：删除， 1：未删
+    private int isDelete = 1;// 删除标记 0：删除，1：未删
     private long userId = 0L;//所属用户ID
+
+    public Member(){}
+
+    public static Member generateNewMember(Member member, long userId){
+        member.setUserId(userId);
+        member.setCreateTime(System.currentTimeMillis());
+        return member;
+    }
 
     public String getName() {
         return name;

@@ -12,6 +12,14 @@ public class MemberJob extends AbstractEntity{
 
     public MemberJob(){}
 
+    public static MemberJob generateNewMemberJob(String name, long userId) {
+        MemberJob memberJob = new MemberJob();
+        memberJob.setName(name);
+        memberJob.setUserId(userId);
+        memberJob.setCreateTime(System.currentTimeMillis());
+        return memberJob;
+    }
+
     public String getName() {
         return name;
     }

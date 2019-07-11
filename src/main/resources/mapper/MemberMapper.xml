@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jujingyun.huiyuan.dao.MemberDao" >
+
+    <sql id="column1">
+        id, name, sex, age, nation, eduBackground, nativeAddress, birthday, idCard, mobilephone, telephone, email, homeAdderss,
+        companyName, companyJob, companyAddress, companyStatus,
+        memberName, memberJob, memberProperty, memberEnterDate, memberReferrer, memberStatus,
+        isQuit, memo, operaRecord, isDelete, userId, createTime, info
+    </sql>
+
+    <sql id="column2">
+        name, sex, age, nation, eduBackground, nativeAddress, birthday, idCard, mobilephone, telephone, email, homeAdderss,
+        companyName, companyJob, companyAddress, companyStatus,
+        memberName, memberJob, memberProperty, memberEnterDate, memberReferrer, memberStatus,
+        isQuit, memo, operaRecord, isDelete, userId, createTime, info
+    </sql>
+    
+    <insert id="addOne" parameterType="com.jujingyun.huiyuan.common.entity.Member">
+        INSERT INTO member(<include refid="column2"/>) VALUE (
+            #{name}, #{sex}, #{age}, #{nation}, #{eduBackground}, #{nativeAddress}, #{birthday}, #{idCard},
+            #{mobilephone}, #{telephone}, #{email}, #{homeAdderss},
+            #{ompanyName}, #{companyJob}, #{companyAddress}, #{companyStatus},
+            #{memberName}, #{memberJob}, #{memberProperty}, #{memberEnterDate}, #{memberReferrer}, #{memberStatus},
+            #{isQuit}, #{memo}, #{operaRecord}, #{isDelete}, #{userId}, #{createTime}, #{info}
+        )
+    </insert>
+
+    <update id="updateOne" parameterType="com.jujingyun.huiyuan.common.entity.Member">
+        UPDATE member
+        SET name=#{name}, sex=#{sex}, age=#{age}, nation=#{nation}, eduBackground=#{eduBackground},
+            nativeAddress=#{nativeAddress}, birthday=#{birthday}, idCard=#{idCard},
+            mobilephone=#{mobilephone}, telephone=#{telephone}, email=#{email}, homeAdderss=#{homeAdderss},
+            ompanyName=#{ompanyName}, companyJob=#{companyJob}, companyAddress=#{companyAddress}, companyStatus=#{companyStatus},
+            memberName=#{memberName}, memberJob=#{memberJob}, memberProperty=#{memberProperty}, memberEnterDate=#{memberEnterDate},
+            memberReferrer=#{memberReferrer}, memberStatus=#{memberStatus},
+            isQuit=#{isQuit}, memo=#{memo}, operaRecord=#{operaRecord}, isDelete=#{isDelete}, userId=#{userId},
+            createTime=#{createTime}, info=#{info}
+        WHERE id=#{id}
+    </update>
+
+    <update id="updateIsDelete">
+        UPDATE member SET isDelete=#{isDelete} WHERE id=#{id}
+    </update>
+
+    <select id="getListBy" parameterType="com.jujingyun.huiyuan.common.entity.Member" resultType="com.jujingyun.huiyuan.common.entity.Member">
+        SELECT <include refid="column1"/> FROM member
+        <where>
+            <if test="mobilephone != ''">
+                and mobilephone=#{mobilephone}
+            </if>
+            <if test="name != ''">
+                and name=#{name}
+            </if>
+            <if test="companyJob != ''">
+                and companyJob=#{companyJob}
+            </if>
+            <if test="userId != 0">
+                and userId=#{userId}
+            </if>
+        </where>
+        ORDER BY createTime DESC
+
+    </select>
+</mapper>

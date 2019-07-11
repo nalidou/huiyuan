@@ -12,6 +12,14 @@ public class MemberProperty extends AbstractEntity{
 
     public MemberProperty(){}
 
+    public static MemberProperty generateNewMemberProperty(String name, long userId) {
+        MemberProperty memberProperty = new MemberProperty();
+        memberProperty.setName(name);
+        memberProperty.setUserId(userId);
+        memberProperty.setCreateTime(System.currentTimeMillis());
+        return memberProperty;
+    }
+
     public String getName() {
         return name;
     }
