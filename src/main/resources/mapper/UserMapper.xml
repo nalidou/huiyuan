@@ -4,21 +4,21 @@
 
     <select id="getByAccount" resultType="com.jujingyun.huiyuan.common.entity.User" parameterType="String">
         SELECT id, account, password, level, isUsed, createTime, info
-        FROM user WHERE account=#{account}
+        FROM user_online WHERE account=#{account}
     </select>
 
     <select id="getAll" resultType="com.jujingyun.huiyuan.common.entity.User">
         SELECT id, account, password, level, isUsed, createTime, info
-        FROM user ORDER BY createTime DESC
+        FROM user_online ORDER BY createTime DESC
     </select>
 
     <insert id="addOne" parameterType="com.jujingyun.huiyuan.common.entity.User" >
-        INSERT INTO user (account, password, level, isUsed, createTime, info)
+        INSERT INTO user_online (account, password, level, isUsed, createTime, info)
         VALUE(#{account}, #{password}, #{level}, #{isUsed}, #{createTime}, #{info})
     </insert>
 
     <update id="updateOne" parameterType="com.jujingyun.huiyuan.common.entity.User">
-        UPDATE user
+        UPDATE user_online
         SET account=#{account},
             password=#{password},
             level=#{level},
