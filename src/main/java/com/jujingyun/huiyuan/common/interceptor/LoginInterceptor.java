@@ -15,7 +15,6 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         HttpSession session = request.getSession();
-        System.out.println("拦截器。。。");
         User user = (User) session.getAttribute("loginUser");
         if(user == null){
             response.setHeader("content-type", "text/html;charset=utf-8");

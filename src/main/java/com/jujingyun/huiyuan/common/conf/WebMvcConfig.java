@@ -1,4 +1,4 @@
-package com.jujingyun.huiyuan.conf;
+package com.jujingyun.huiyuan.common.conf;
 
 import com.jujingyun.huiyuan.common.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
