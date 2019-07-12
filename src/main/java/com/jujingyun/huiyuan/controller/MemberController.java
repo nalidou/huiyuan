@@ -93,6 +93,30 @@ public class MemberController extends AbstractController {
     }
 
 
+    @RequestMapping("/exportExcel")
+    public JSONObject exportExcel(@RequestParam(value = "mobilephone", defaultValue = "") String mobilephone,
+                             @RequestParam(value = "name", defaultValue = "") String name,
+                             @RequestParam(value = "memberJob" ,defaultValue = "") String memberJob,
+                             @RequestParam(value = "startTime", defaultValue = "") String startTime,
+                             @RequestParam(value = "endTime", defaultValue = "") String endTime,
+                             HttpSession session) {
+        JSONObject result = new JSONObject();
+
+        User user = getUser(session);
+        Member param = new Member();
+        param.setUserId(user.getId());
+        param.setMobilephone(mobilephone);
+        param.setName(name);
+        param.setMemberJob(memberJob);
+        param.setStartTime(TimeUtil.dateStr2Time(startTime));
+        param.setEndTime(TimeUtil.dateStr2Time(endTime));
+
+        List<Member> list = memberService.getListBy(param);
+
+        // FileUtil.downloadFile(toUploadFile, response, "kaola-" + getTimeByCalendar() + ".zip");
+        return result;
+    }
+
 
     @Override
     public void init() {
