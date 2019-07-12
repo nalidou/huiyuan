@@ -1,6 +1,7 @@
 package com.jujingyun.huiyuan.common.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jujingyun.huiyuan.common._enum.ErrorCodeEnum;
 import com.jujingyun.huiyuan.common.entity.User;
 import com.jujingyun.huiyuan.controller.UserController;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.setHeader("content-type", "text/html;charset=utf-8");
             response.setContentType("text/html;charset=utf-8");
             JSONObject json = new JSONObject();
-            json.put("404", "用户未登录");
+            json.put(String.valueOf(ErrorCodeEnum.UNAUTHORIZED.getCode()), ErrorCodeEnum.UNAUTHORIZED.getMsg());
             try {
                 PrintWriter out = response.getWriter();
                 out.print(json.toJSONString());

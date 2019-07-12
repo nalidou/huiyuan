@@ -6,8 +6,11 @@ package com.jujingyun.huiyuan.common._enum;
 public enum ErrorCodeEnum {
 
     SUCCESS(200, "执行成功"),
-    ERROR(500, "系统异常"),
-    FAILED(501, "操作失败");
+
+    UNAUTHORIZED(401, "要求身份验证"),
+    FAILED(406, "执行失败"),
+
+    ERROR(500, "系统异常");
 
     private int code;
     private String msg;
