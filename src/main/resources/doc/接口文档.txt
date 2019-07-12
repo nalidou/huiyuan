@@ -8,17 +8,17 @@ http://huiyuan.jujingyun.com/#/dashboard
 
 以下接口GET/POST都支持
 
-登录： http://59.110.18.217:12380/user/login?account=admin&password=abc123
+登录： http://59.110.18.217:12380/user/login?account=admin&password=123
 注销： http://59.110.18.217:12380/user/logout
 
 商会职务：
-添加：http://59.110.18.217:12380/memberJob/add?name=aaa
-删除：http://59.110.18.217:12380/memberJob/delete?id=123
+添加：http://59.110.18.217:12380/memberJob/add?name=经理
+删除：http://59.110.18.217:12380/memberJob/delete?id=4
 获取所有：http://59.110.18.217:12380/memberJob/getAll
 
 会员性质：
-添加：http://59.110.18.217:12380/memberProperty/add?name=aaa
-删除：http://59.110.18.217:12380/memberProperty/delete?id=123
+添加：http://59.110.18.217:12380/memberProperty/add?name=会员1
+删除：http://59.110.18.217:12380/memberProperty/delete?id=5
 获取所有：http://59.110.18.217:12380/memberProperty/getAll
 
 会员管理：

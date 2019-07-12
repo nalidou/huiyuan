@@ -41,10 +41,10 @@ public class MemberProperty extends AbstractEntity{
         JSONObject json = new JSONObject();
         json.put("id", getId());
         json.put("name", getName());
-        json.put("info", getInfo());
-        json.put("createTime", getCreateTime());
-        json.put("createTimeStr", getCreateTimeStr());
-        json.put("userId", getUserId());
+//        json.put("info", getInfo());
+//        json.put("createTime", getCreateTime());
+//        json.put("createTimeStr", getCreateTimeStr());
+//        json.put("userId", getUserId());
         return json;
     }
 }
