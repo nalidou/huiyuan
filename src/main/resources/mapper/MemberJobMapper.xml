@@ -7,6 +7,21 @@
         FROM member_job WHERE userId=#{userId} ORDER BY createTime DESC
     </select>
 
+    <select id="getListBy" resultType="com.jujingyun.huiyuan.common.entity.MemberJob" parameterType="com.jujingyun.huiyuan.common.entity.MemberJob">
+        SELECT id, name, userId, createTime, info
+        FROM member_job
+        <where>
+            <if test="userId != 0">
+                and userId=#{userId}
+            </if>
+            <if test="name != ''">
+                and name=#{name}
+            </if>
+        </where>
+
+        ORDER BY createTime DESC
+    </select>
+
     <insert id="addOne" parameterType="com.jujingyun.huiyuan.common.entity.MemberJob" >
         INSERT INTO member_job (name, userId, createTime, info)
         VALUE(#{name}, #{userId}, #{createTime}, #{info})

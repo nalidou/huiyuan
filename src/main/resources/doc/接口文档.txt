@@ -1,2 +1,6 @@
 http://huiyuan.jujingyun.com/#/dashboard
 
+登录： http://59.110.18.217:12380/user/login?account=admin&password=abc123  GET/POST都支持
+注销： http://59.110.18.217:12380/user/logout GET/POST都支持
+
+

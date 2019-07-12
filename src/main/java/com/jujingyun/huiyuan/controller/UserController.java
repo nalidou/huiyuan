@@ -25,8 +25,7 @@ public class UserController extends AbstractController {
     @Override
     public void init() {}
 
-    //@PostMapping("/login")
-    @GetMapping("/login")
+    @RequestMapping("/login")
     public JSONObject login(String account, String password, HttpSession session) {
         JSONObject result = new JSONObject();
         User user = userService.login(account, password);
@@ -34,11 +33,23 @@ public class UserController extends AbstractController {
             session.setMaxInactiveInterval(60 * 60 * 24);
             session.setAttribute("loginUser", user);
             addSuccess(result);
+            result.put("userId", user.getId());
+            result.put("account", user.getAccount());
         } else {
             addFailed(result);
         }
         return result;
     }
+
+    @RequestMapping("/logout")
+    public JSONObject logout(HttpSession session) {
+        JSONObject result = new JSONObject();
+        session.removeAttribute("loginUser");
+        addSuccess(result);
+        return result;
+    }
+
+
 
     @GetMapping("/test")
     public JSONObject test(){

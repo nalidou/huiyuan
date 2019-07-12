@@ -7,8 +7,8 @@ import com.alibaba.fastjson.JSONObject;
  */
 public class MemberJob extends AbstractEntity{
 
-    private String name;
-    private long userId;
+    private String name = "";
+    private long userId = 0L;
 
     public MemberJob(){}
 

@@ -12,4 +12,6 @@ public interface MemberJobDao {
 
     List<MemberJob> getListByUserId(long userId);
 
+    List<MemberJob> getListBy(MemberJob memberJob);
+
 }
