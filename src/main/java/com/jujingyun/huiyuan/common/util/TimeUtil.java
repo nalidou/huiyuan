@@ -24,13 +24,23 @@ public class TimeUtil {
     }
 
     // 2019-07-10 18:01:47 -> 1562752907000
-    public static long timeStr2Time(String time) throws ParseException {
-        return timeFormat.parse(time).getTime();
+    public static long timeStr2Time(String time){
+        try {
+            return timeFormat.parse(time).getTime();
+        } catch (Exception e) {
+            return 0L;
+        }
+
     }
 
     //2019-07-10  -> 1562688000000
-    public static long dateStr2Time(String date) throws ParseException {
-        return dateFormat.parse(date).getTime();
+    public static long dateStr2Time(String date) {
+        try {
+            return dateFormat.parse(date).getTime();
+        } catch (Exception e) {
+            return 0L;
+        }
+
     }
 
 

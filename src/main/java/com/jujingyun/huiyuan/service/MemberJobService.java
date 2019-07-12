@@ -37,7 +37,7 @@ public class MemberJobService {
 
     public boolean deleteMemberJob(long id) {
         try {
-            if (memberJobDao.delOne(id) == 1) {
+            if (memberJobDao.delOne(id) > 0) {
                 return true;
             }
         } catch (Exception e) {

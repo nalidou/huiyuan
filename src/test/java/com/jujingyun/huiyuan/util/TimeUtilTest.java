@@ -33,9 +33,12 @@ public class TimeUtilTest {
 
         //System. out. println(11 % 3 * 2);
 
+
+        System.out.println(TimeUtil.dateStr2Time(""));
+
         int x = 1;
         float y = 2;
-        System.out.println(x/y);
+        //System.out.println(x/y);
     }
 
     public static String getSexStr(int sex) {

@@ -42,6 +42,11 @@ public class Member extends AbstractEntity{
     private int isDelete = 1;// 删除标记 0：删除，1：未删
     private long userId = 0L;//所属用户ID
 
+    private long startTime = 0L;
+    private long endTime = 0L;
+    private int pageIndex = 1;
+    private int pageSize = 10;
+
     public Member(){}
 
     public static Member generateNewMember(Member member, long userId){
@@ -309,6 +314,44 @@ public class Member extends AbstractEntity{
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+
+    public int getPageIndex() {
+        int newPageIndex = 0;
+        if (pageIndex == 1) {
+            newPageIndex = 0;
+        } else if (pageIndex > 1) {
+            newPageIndex = (pageIndex - 1) * pageSize;
+        }
+        return newPageIndex;
+    }
+
+    public void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
     @Override

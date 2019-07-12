@@ -29,10 +29,10 @@ public class MemberJobController extends AbstractController{
     @Autowired
     private MemberJobService memberJobService;
 
-    @RequestMapping("/addMemberJob")
-    public JSONObject addMemberJob(String name, HttpSession session){
+    @RequestMapping("/add")
+    public JSONObject add(String name, HttpSession session){
         JSONObject result = new JSONObject();
-        User user = (User) session.getAttribute("loginUser");
+        User user = getUser(session);
         if (memberJobService.addMemberJob(name, user.getId())) {
             addSuccess(result);
         } else {
@@ -41,8 +41,8 @@ public class MemberJobController extends AbstractController{
         return result;
     }
 
-    @RequestMapping("/deleteMemberJob")
-    public JSONObject deleteMemberJob(long id){
+    @RequestMapping("/delete")
+    public JSONObject delete(long id){
         JSONObject result = new JSONObject();
         if (memberJobService.deleteMemberJob(id)) {
             addSuccess(result);
@@ -56,7 +56,7 @@ public class MemberJobController extends AbstractController{
     public JSONObject getAll(HttpSession session){
         JSONObject result = new JSONObject();
         JSONArray jsonArray = new JSONArray();
-        User user = (User) session.getAttribute("loginUser");
+        User user = getUser(session);
         List<MemberJob> list = memberJobService.getListByUserId(user.getId());
         for (MemberJob memberJob : list) {
             jsonArray.add(memberJob.toJSONObject());

@@ -7,6 +7,22 @@
         FROM member_property WHERE userId=#{userId} ORDER BY createTime DESC
     </select>
 
+    <select id="getListBy" resultType="com.jujingyun.huiyuan.common.entity.MemberProperty"
+            parameterType="com.jujingyun.huiyuan.common.entity.MemberProperty">
+        SELECT id, name, userId, createTime, info
+        FROM member_property
+        <where>
+            <if test="userId != 0">
+                and userId=#{userId}
+            </if>
+            <if test="name != ''">
+                and name=#{name}
+            </if>
+        </where>
+
+        ORDER BY createTime DESC
+    </select>
+
     <insert id="addOne" parameterType="com.jujingyun.huiyuan.common.entity.MemberProperty" >
         INSERT INTO member_property (name, userId, createTime, info)
         VALUE(#{name}, #{userId}, #{createTime}, #{info})

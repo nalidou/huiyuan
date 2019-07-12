@@ -1,6 +1,69 @@
 http://huiyuan.jujingyun.com/#/dashboard
 
-登录： http://59.110.18.217:12380/user/login?account=admin&password=abc123  GET/POST都支持
-注销： http://59.110.18.217:12380/user/logout GET/POST都支持
+响应状态码
+(200, "执行成功"),
+(401, "要求身份验证"),
+(406, "执行失败"),
+(500, "系统异常");
+
+以下接口GET/POST都支持
+
+登录： http://59.110.18.217:12380/user/login?account=admin&password=abc123
+注销： http://59.110.18.217:12380/user/logout
+
+商会职务：
+添加：http://59.110.18.217:12380/memberJob/add?name=aaa
+删除：http://59.110.18.217:12380/memberJob/delete?id=123
+获取所有：http://59.110.18.217:12380/memberJob/getAll
+
+会员性质：
+添加：http://59.110.18.217:12380/memberProperty/add?name=aaa
+删除：http://59.110.18.217:12380/memberProperty/delete?id=123
+获取所有：http://59.110.18.217:12380/memberProperty/getAll
+
+会员管理：
+添加：http://59.110.18.217:12380/member/add?name=aaa。。。。。
+修改：http://59.110.18.217:12380/member/add?name=aaa。。。。。
+删除：http://59.110.18.217:12380/member/delete?id=123
+
+搜索：http://59.110.18.217:12380/memberProperty/search？
+参数如下
+String mobilephone, 手机
+String name, 姓名
+String startTime,
+String endTime,
+int pageIndex, 第几页
+int pageSize, 每页有多少条数据
+
+返回数据
+private String name = "";//姓名
+private int sex = 0; //性别 1：男，2：女
+private int age = 0;//年龄
+private String nation = "";//民族
+private String eduBackground = ""; //学历
+private String nativeAddress = ""; //籍贯
+private String birthday = "";//生日
+private String idCard = "";//身份证号
+private String mobilephone = "";//手机
+private String telephone = "";//电话
+private String email = "";//邮箱
+private String homeAdderss = "";//家庭地址
+
+private String companyName = "";//企业信息
+private String companyJob = "";//企业职务
+private String companyAddress = "";//公司地址
+private int companyStatus = 0;//职务状态 1：在职，2：离职，3：退休
+
+private String memberName = "";//所在商会
+private String memberJob = "";//商会职务
+private String memberProperty = "";//商会性质
+private long memberEnterDate = 0L;//入会时间
+private String memberReferrer = "";//推荐人
+private int memberStatus = 0;//会费状态 1：未交费，2：已交费
+
+private int isQuit = 0;//退会标识 1：退，2：未退
+private String memo = "";//备注
+private String operaRecord = "";//操作记录,操作的人
+
 
 

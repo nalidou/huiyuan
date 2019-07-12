@@ -52,14 +52,25 @@
             <if test="name != ''">
                 and name=#{name}
             </if>
-            <if test="companyJob != ''">
-                and companyJob=#{companyJob}
+            <if test="memberJob != ''">
+                and memberJob=#{memberJob}
             </if>
             <if test="userId != 0">
                 and userId=#{userId}
             </if>
+            <if test="startTime != 0">
+                and memberEnterDate &gt; #{startTime}
+            </if>
+            <if test="endTime != 0">
+                and memberEnterDate &lt; #{endTime}
+            </if>
+            <if test="isDelete != -1">
+                and isDelete=#{isDelete}
+            </if>
         </where>
         ORDER BY createTime DESC
+        LIMIT #{pageIndex},#{pageSize}
+
 
     </select>
 </mapper>

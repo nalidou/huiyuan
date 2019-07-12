@@ -11,4 +11,6 @@ public interface MemberPropertyDao {
     int delOne(long id);
 
     List<MemberProperty> getListByUserId(long userId);
+
+    List<MemberProperty> getListBy(MemberProperty memberProperty);
 }
