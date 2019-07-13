@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jujingyun.huiyuan.common.entity.Member;
 import com.jujingyun.huiyuan.common.entity.User;
+import com.jujingyun.huiyuan.common.util.FileUtil;
 import com.jujingyun.huiyuan.common.util.TimeUtil;
 import com.jujingyun.huiyuan.service.MemberService;
 import org.slf4j.Logger;
@@ -12,8 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -99,8 +104,8 @@ public class MemberController extends AbstractController {
                              @RequestParam(value = "memberJob" ,defaultValue = "") String memberJob,
                              @RequestParam(value = "startTime", defaultValue = "") String startTime,
                              @RequestParam(value = "endTime", defaultValue = "") String endTime,
-                             HttpSession session) {
-        JSONObject result = new JSONObject();
+                             HttpServletResponse response, HttpSession session) {
+
 
         User user = getUser(session);
         Member param = new Member();
@@ -111,9 +116,24 @@ public class MemberController extends AbstractController {
         param.setStartTime(TimeUtil.dateStr2Time(startTime));
         param.setEndTime(TimeUtil.dateStr2Time(endTime));
 
-        List<Member> list = memberService.getListBy(param);
+        memberService.exportMemberExcel(param, response);
 
-        // FileUtil.downloadFile(toUploadFile, response, "kaola-" + getTimeByCalendar() + ".zip");
+        return null;
+    }
+
+    @RequestMapping("/uploadExcel")
+    public JSONObject uploadExcel(HttpServletRequest request,
+                                  HttpServletResponse response,
+                                  HttpSession session,
+                                  MultipartFile file){
+        JSONObject result = new JSONObject();
+        User user = getUser(session);
+
+        if (memberService.parseExcel(file, user.getId())) {
+            addSuccess(result);
+        } else {
+            addFailed(result);
+        }
         return result;
     }
 

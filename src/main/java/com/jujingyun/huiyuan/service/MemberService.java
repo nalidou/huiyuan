@@ -1,13 +1,20 @@
 package com.jujingyun.huiyuan.service;
 
 import com.jujingyun.huiyuan.common.entity.Member;
+import com.jujingyun.huiyuan.common.util.ExcelUtil;
+import com.jujingyun.huiyuan.common.util.FileUtil;
+import com.jujingyun.huiyuan.common.util.TimeUtil;
 import com.jujingyun.huiyuan.controller.MemberController;
 import com.jujingyun.huiyuan.dao.MemberDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,5 +67,31 @@ public class MemberService {
             log.error("getListBy failed", e);
             return null;
         }
+    }
+
+    public void exportMemberExcel(Member param, HttpServletResponse response){
+        List<Member> list = getListBy(param);
+        List<List<String>> dataList = new ArrayList<List<String>>();
+        for (Member member : list){
+            List<String> data = new ArrayList<String>();
+            data.add(String.valueOf(member.getId()));
+
+            dataList.add(data);
+        }
+        File excel = ExcelUtil.getExcel(dataList);
+
+        FileUtil.downloadFile(excel, response, excel.getName() + "-" + TimeUtil.time2TimeStr(System.currentTimeMillis()));
+
+    }
+
+    public boolean parseExcel(MultipartFile file, long userId){
+        try {
+            List<List<String>> dataList = ExcelUtil.readExcel(file);
+            return true;
+        } catch (Exception e) {
+            log.error("parseExcel failed", e);
+            return false;
+        }
+
     }
 }

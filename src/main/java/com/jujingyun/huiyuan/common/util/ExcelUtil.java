@@ -8,9 +8,26 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.multipart.MultipartFile;
 
 
 public class ExcelUtil {
+
+    public static List<List<String>> readExcel(MultipartFile file){
+        try {
+
+            String ofileName = file.getOriginalFilename();
+            String fileName = file.getName();
+            boolean isExcel2003 = true;
+            if (isExcel2007(ofileName)) {
+                isExcel2003 = false;
+            }
+            return read(file.getInputStream(), isExcel2003);
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
 
     public static List<List<String>> readExcel(String filePath) {
         List<List<String>> dataLst = null;
@@ -194,9 +211,47 @@ public class ExcelUtil {
 
     }
 
+    public static File getExcel(List<List<String>> dataList){
+        // 2003版本
+        Workbook workBook  = new HSSFWorkbook();
+        // sheet 对应一个工作页
+        Sheet sheet = workBook.getSheetAt(0);
 
-    private static final String EXCEL_XLS = "xls";
-    private static final String EXCEL_XLSX = "xlsx";
+        //删除原有数据，除了属性列
+        int rowNumber = sheet.getLastRowNum();
+        for (int i = 1; i <= rowNumber; i++) {
+            Row row = sheet.getRow(i);
+            sheet.removeRow(row);
+        }
+
+        //写一行
+        for (int j = 0; j < dataList.size(); j++) {
+            Row row = sheet.createRow(j);
+            //写一列
+            List<String> datas = dataList.get(j);
+            for (int k=0; k<datas.size(); k++) {
+                row.createCell(k).setCellValue(datas.get(k));
+            }
+        }
+
+        OutputStream out = null;
+        File file = new File("download/file.xls");
+        try {
+            out = new FileOutputStream(file);
+            workBook.write(out);
+
+            out.close();
+            return file;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+
+    private static final String EXCEL_XLS = ".xls";
+    private static final String EXCEL_XLSX = ".xlsx";
 
     private static Workbook getWorkbok(File file) throws IOException{
         Workbook wb = null;
