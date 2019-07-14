@@ -1,8 +1,8 @@
 package com.jujingyun.huiyuan.common.util;
 import java.io.*;
 import java.util.*;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -211,38 +211,26 @@ public class ExcelUtil {
 
     }
 
-    public static File getExcel(List<List<String>> dataList){
-        // 2003版本
-        Workbook workBook  = new HSSFWorkbook();
-        // sheet 对应一个工作页
-        Sheet sheet = workBook.getSheetAt(0);
-
-        //删除原有数据，除了属性列
-        int rowNumber = sheet.getLastRowNum();
-        for (int i = 1; i <= rowNumber; i++) {
-            Row row = sheet.getRow(i);
-            sheet.removeRow(row);
-        }
-
-        //写一行
-        for (int j = 0; j < dataList.size(); j++) {
-            Row row = sheet.createRow(j);
-            //写一列
-            List<String> datas = dataList.get(j);
-            for (int k=0; k<datas.size(); k++) {
-                row.createCell(k).setCellValue(datas.get(k));
-            }
-        }
-
-        OutputStream out = null;
-        File file = new File("download/file.xls");
+    public static HSSFWorkbook getExcel(List<List<String>> dataList){
         try {
-            out = new FileOutputStream(file);
-            workBook.write(out);
 
-            out.close();
-            return file;
-        } catch (IOException e) {
+            // 声明一个工作薄 2003版本
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            //创建一个Excel表单
+            HSSFSheet sheet = workbook.createSheet("sheet1");
+            //创建表头
+            setTitle(workbook, sheet);
+
+            for (int j = 0; j < dataList.size(); j++) {
+                Row row = sheet.createRow(j);
+                List<String> datas = dataList.get(j);
+                for (int k=0; k<datas.size(); k++) {
+                    row.createCell(k).setCellValue(datas.get(k));
+                }
+            }
+            return workbook;
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -262,6 +250,29 @@ public class ExcelUtil {
             wb = new XSSFWorkbook(in);
         }
         return wb;
+    }
+
+    // 创建表头
+    private static void setTitle(HSSFWorkbook workbook, HSSFSheet sheet) {
+        HSSFRow row = sheet.createRow(0);
+        // 设置列宽，setColumnWidth的第二个参数要乘以256，这个参数的单位是1/256个字符宽度
+        sheet.setColumnWidth(8, 60 * 256);
+        // 设置为居中加粗
+        HSSFCellStyle style = workbook.createCellStyle();
+        HSSFFont font = workbook.createFont();
+        //font.setBold(true);
+        style.setFont(font);
+        //导出的Excel头部
+        String[] headers = { "调整类型", "申请日期", "OA流程编号", "申请组织", "申请部门", "是否涉及人力成本", "调出组织", "调出部门", "调出科目", "调出月份",
+                "调出金额", "查询费控系统", "调入组织", "调入部门", "调入科目", "调入月份", "调入金额", "调整原因" };
+        // 设置表格默认列宽度为15个字节
+        sheet.setDefaultColumnWidth((short) 16);
+        for (short i = 0; i < headers.length; i++) {
+            HSSFCell cell = row.createCell(i);
+            HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+            cell.setCellValue(text);
+            cell.setCellStyle(style);
+        }
     }
 
 }

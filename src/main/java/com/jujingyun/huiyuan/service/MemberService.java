@@ -6,6 +6,7 @@ import com.jujingyun.huiyuan.common.util.FileUtil;
 import com.jujingyun.huiyuan.common.util.TimeUtil;
 import com.jujingyun.huiyuan.controller.MemberController;
 import com.jujingyun.huiyuan.dao.MemberDao;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -78,10 +79,8 @@ public class MemberService {
 
             dataList.add(data);
         }
-        File excel = ExcelUtil.getExcel(dataList);
-
-        FileUtil.downloadFile(excel, response, excel.getName() + "-" + TimeUtil.time2TimeStr(System.currentTimeMillis()));
-
+        HSSFWorkbook excel = ExcelUtil.getExcel(dataList);
+        FileUtil.downloadExcel(excel, response, TimeUtil.time2TimeStrNum(System.currentTimeMillis()) + ".xls");
     }
 
     public boolean parseExcel(MultipartFile file, long userId){

@@ -18,6 +18,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -171,5 +173,29 @@ public class FileUtil {
         }
 
         return result;
+    }
+
+    public static void downloadExcel(HSSFWorkbook excel, HttpServletResponse response, String excelName) {
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment;filename=" + excelName);
+        ServletOutputStream out = null;
+        try {
+            out = response.getOutputStream();
+            excel.write(out);
+            out.flush();
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 }

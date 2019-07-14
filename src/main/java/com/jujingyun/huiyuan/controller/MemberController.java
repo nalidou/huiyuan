@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jujingyun.huiyuan.common.entity.Member;
 import com.jujingyun.huiyuan.common.entity.User;
+import com.jujingyun.huiyuan.common.util.ExcelUtil;
 import com.jujingyun.huiyuan.common.util.FileUtil;
 import com.jujingyun.huiyuan.common.util.TimeUtil;
 import com.jujingyun.huiyuan.service.MemberService;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -135,6 +139,28 @@ public class MemberController extends AbstractController {
             addFailed(result);
         }
         return result;
+    }
+
+
+
+    @RequestMapping("/download")
+    public void download(HttpServletRequest request,
+                         HttpServletResponse response){
+        List<List<String>> dataList = new ArrayList<>();
+        for (int i=0; i<10; i++) {
+            List<String> data = new ArrayList<>();
+            data.add("id" + i);
+            data.add("姓名" + i);
+            data.add("age" + i);
+            data.add("address" + i);
+
+            dataList.add(data);
+        }
+        System.out.println(dataList.toString());
+        HSSFWorkbook excel = ExcelUtil.getExcel(dataList);
+
+        FileUtil.downloadExcel(excel, response, TimeUtil.time2TimeStrNum(System.currentTimeMillis()) + ".xls");
+
     }
 
 
