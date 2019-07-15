@@ -71,16 +71,21 @@ public class MemberService {
     }
 
     public void exportMemberExcel(Member param, HttpServletResponse response){
-        List<Member> list = getListBy(param);
-        List<List<String>> dataList = new ArrayList<List<String>>();
-        for (Member member : list){
-            List<String> data = new ArrayList<String>();
-            data.add(String.valueOf(member.getId()));
+        try {
+            List<Member> list = getListBy(param);
+            List<List<String>> dataList = new ArrayList<List<String>>();
+            for (Member member : list){
+                List<String> data = new ArrayList<String>();
+                data.add(String.valueOf(member.getId()));
+                data.add(String.valueOf(member.getName()));
 
-            dataList.add(data);
+                dataList.add(data);
+            }
+            HSSFWorkbook excel = ExcelUtil.getExcel(dataList);
+            FileUtil.downloadExcel(excel, response, TimeUtil.time2TimeStrNum(System.currentTimeMillis()) + ".xls");
+        } catch (Exception e) {
+            log.error("exportMemberExcel", e);
         }
-        HSSFWorkbook excel = ExcelUtil.getExcel(dataList);
-        FileUtil.downloadExcel(excel, response, TimeUtil.time2TimeStrNum(System.currentTimeMillis()) + ".xls");
     }
 
     public boolean parseExcel(MultipartFile file, long userId){

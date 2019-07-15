@@ -261,6 +261,7 @@ public class ExcelUtil {
         HSSFCellStyle style = workbook.createCellStyle();
         HSSFFont font = workbook.createFont();
         //font.setBold(true);
+
         style.setFont(font);
         //导出的Excel头部
         String[] headers = { "调整类型", "申请日期", "OA流程编号", "申请组织", "申请部门", "是否涉及人力成本", "调出组织", "调出部门", "调出科目", "调出月份",
