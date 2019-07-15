@@ -25,6 +25,10 @@ http://huiyuan.jujingyun.com/#/dashboard
 添加：http://59.110.18.217:12380/member/add?name=aaa。。。。。
 修改：http://59.110.18.217:12380/member/add?name=aaa。。。。。
 删除：http://59.110.18.217:12380/member/delete?id=123
+获取一个：http://59.110.18.217:12380/member/getById?id=123
+
+导出：http://59.110.18.217:12380/member/exportExcel?mobilephone=&name=&memberJob=&startTime=&endTime=
+导入：http://59.110.18.217:12380/member/uploadExcel
 
 搜索：http://59.110.18.217:12380/memberProperty/search？
 参数如下

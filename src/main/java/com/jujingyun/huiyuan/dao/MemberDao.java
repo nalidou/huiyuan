@@ -14,8 +14,7 @@ public interface MemberDao {
 
     List<Member> getListBy(Member member);
 
-
-
+    Member getById(long id);
 
 
 }

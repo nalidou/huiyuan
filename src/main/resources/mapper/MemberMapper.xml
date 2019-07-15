@@ -70,7 +70,9 @@
         </where>
         ORDER BY createTime DESC
         LIMIT #{pageIndex},#{pageSize}
+    </select>
 
-
+    <select id="getById" parameterType="long" resultType="com.jujingyun.huiyuan.common.entity.Member">
+        SELECT <include refid="column1"/> FROM member WHERE id=#{id}
     </select>
 </mapper>

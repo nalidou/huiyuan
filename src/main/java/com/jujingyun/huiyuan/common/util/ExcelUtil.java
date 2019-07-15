@@ -3,11 +3,8 @@ import java.io.*;
 import java.util.*;
 
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -158,7 +155,6 @@ public class ExcelUtil {
         return filePath.matches("^.+\\.(?i)(xlsx)$");
     }
 
-
     public static void writeExcel(List<List<String>> dataList, String finalXlsxPath){
         OutputStream out = null;
         try {
@@ -211,33 +207,6 @@ public class ExcelUtil {
 
     }
 
-    public static HSSFWorkbook getExcel(List<List<String>> dataList){
-        try {
-
-            // 声明一个工作薄 2003版本
-            HSSFWorkbook workbook = new HSSFWorkbook();
-            //创建一个Excel表单
-            HSSFSheet sheet = workbook.createSheet("sheet1");
-            //创建表头
-            setTitle(workbook, sheet);
-
-            for (int j = 0; j < dataList.size(); j++) {
-                Row row = sheet.createRow(j);
-                List<String> datas = dataList.get(j);
-                for (int k=0; k<datas.size(); k++) {
-                    row.createCell(k).setCellValue(datas.get(k));
-                }
-            }
-            return workbook;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-
-    }
-
-
     private static final String EXCEL_XLS = ".xls";
     private static final String EXCEL_XLSX = ".xlsx";
 
@@ -252,27 +221,61 @@ public class ExcelUtil {
         return wb;
     }
 
-    // 创建表头
-    private static void setTitle(HSSFWorkbook workbook, HSSFSheet sheet) {
-        HSSFRow row = sheet.createRow(0);
-        // 设置列宽，setColumnWidth的第二个参数要乘以256，这个参数的单位是1/256个字符宽度
-        sheet.setColumnWidth(8, 60 * 256);
-        // 设置为居中加粗
-        HSSFCellStyle style = workbook.createCellStyle();
-        HSSFFont font = workbook.createFont();
-        //font.setBold(true);
+    //创建2007版本的Excel
+    public static XSSFWorkbook createExcel2007(String sheetName, String[] tities, List<List<String>> dataList){
+        try {
+            //声明一个工作薄2007版本
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            //创建一个Excel表单
+            XSSFSheet sheet = workbook.createSheet(sheetName);
+            //设置表头
+            setTitle(workbook, sheet, tities, 0);
 
-        style.setFont(font);
-        //导出的Excel头部
-        String[] headers = { "调整类型", "申请日期", "OA流程编号", "申请组织", "申请部门", "是否涉及人力成本", "调出组织", "调出部门", "调出科目", "调出月份",
-                "调出金额", "查询费控系统", "调入组织", "调入部门", "调入科目", "调入月份", "调入金额", "调整原因" };
-        // 设置表格默认列宽度为15个字节
-        sheet.setDefaultColumnWidth((short) 16);
-        for (short i = 0; i < headers.length; i++) {
-            HSSFCell cell = row.createCell(i);
-            HSSFRichTextString text = new HSSFRichTextString(headers[i]);
-            cell.setCellValue(text);
-            cell.setCellStyle(style);
+            for (int j = 0; j < dataList.size(); j++) {
+                Row row = sheet.createRow(j+1);
+                List<String> datas = dataList.get(j);
+                for (int k=0; k<datas.size(); k++) {
+                    row.createCell(k).setCellValue(datas.get(k));
+                }
+            }
+            return workbook;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // 设置表头 2007
+    private static void setTitle(XSSFWorkbook workbook, XSSFSheet sheet, String[] colHeader, int startRow) {
+        XSSFRow row = sheet.createRow(startRow);
+        row.setHeight((short)600);
+        XSSFCellStyle cellstyle = workbook.createCellStyle();
+        cellstyle.setAlignment((short)2);
+        cellstyle.setVerticalAlignment((short)1);
+        cellstyle.setWrapText(true);
+        cellstyle.setBorderBottom((short)1);
+        cellstyle.setBottomBorderColor((short)8);
+        cellstyle.setBorderLeft((short)1);
+        cellstyle.setLeftBorderColor((short)8);
+        cellstyle.setBorderRight((short)1);
+        cellstyle.setRightBorderColor((short)8);
+        cellstyle.setBorderTop((short)1);
+        cellstyle.setTopBorderColor((short)8);
+        cellstyle.setFillBackgroundColor((short)22);
+
+
+
+        XSSFFont font = workbook.createFont();
+        font.setBoldweight((short)650);
+        font.setFontName("宋体");
+        font.setFontHeight((short)220);
+        cellstyle.setFont(font);
+
+        for(int i = 0; i < colHeader.length; ++i) {
+            XSSFCell cell = row.createCell(i);
+            cell.setCellType(1);
+            cell.setCellStyle(cellstyle);
+            cell.setCellValue(colHeader[i]);
         }
     }
 

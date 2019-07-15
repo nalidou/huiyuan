@@ -9,6 +9,7 @@ import com.jujingyun.huiyuan.common.util.FileUtil;
 import com.jujingyun.huiyuan.common.util.TimeUtil;
 import com.jujingyun.huiyuan.service.MemberService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class MemberController extends AbstractController {
     }
 
     @RequestMapping("/update")
-    public JSONObject add(Member member) {
+    public JSONObject update(Member member) {
         JSONObject result = new JSONObject();
         if (memberService.addOrUpdateMember(member, 0L)) {
             addSuccess(result);
@@ -101,7 +102,21 @@ public class MemberController extends AbstractController {
         return result;
     }
 
+    @RequestMapping("/getById")
+    public JSONObject getById(long id, HttpSession session){
+        User user = (User)getUser(session);
+        JSONObject result = new JSONObject();
+        Member member = memberService.getById(id, user.getId());
+        if (member != null) {
+            result.put("member", member.toJSONObject());
+            addSuccess(result);
+        } else {
+            addFailed(result);
+        }
+        return result;
+    }
 
+    //导出
     @RequestMapping("/exportExcel")
     public JSONObject exportExcel(@RequestParam(value = "mobilephone", defaultValue = "") String mobilephone,
                              @RequestParam(value = "name", defaultValue = "") String name,
@@ -121,10 +136,10 @@ public class MemberController extends AbstractController {
         param.setEndTime(TimeUtil.dateStr2Time(endTime));
 
         memberService.exportMemberExcel(param, response);
-
         return null;
     }
 
+    //导入
     @RequestMapping("/uploadExcel")
     public JSONObject uploadExcel(HttpServletRequest request,
                                   HttpServletResponse response,
@@ -150,16 +165,23 @@ public class MemberController extends AbstractController {
         for (int i=0; i<10; i++) {
             List<String> data = new ArrayList<>();
             data.add("id" + i);
-            data.add("姓名" + i);
+            data.add("姓名姓名姓名姓名姓名姓名姓名姓名姓名姓名" + i);
             data.add("age" + i);
             data.add("address" + i);
 
             dataList.add(data);
         }
+        String[] titles = new String[] {
+                "序号", "姓名", "性别", "年龄", "民族",
+                "籍贯", "学历", "身份证", "出生年月", "邮编",
+                "手机号", "固定电话", "邮箱", "家庭地址", "企业名称",
+                "企业职务", "职务情况", "公司地址", "会员性质", "所在商会",
+                "会员职务", "加入日期", "推荐人", "会费状态", "备注"
+        };
         System.out.println(dataList.toString());
-        HSSFWorkbook excel = ExcelUtil.getExcel(dataList);
+        XSSFWorkbook excel = ExcelUtil.createExcel2007("会员信息",titles, dataList);
 
-        FileUtil.downloadExcel(excel, response, TimeUtil.time2TimeStrNum(System.currentTimeMillis()) + ".xls");
+        FileUtil.downloadExcel(excel, response, TimeUtil.time2TimeStrNum(System.currentTimeMillis()));
 
     }
 

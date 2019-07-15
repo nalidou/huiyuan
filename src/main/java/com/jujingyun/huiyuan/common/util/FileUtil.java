@@ -20,6 +20,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -175,7 +177,20 @@ public class FileUtil {
         return result;
     }
 
-    public static void downloadExcel(HSSFWorkbook excel, HttpServletResponse response, String excelName) {
+    /**
+     * 下载excel
+     * @param excel
+     * @param response
+     * @param excelName
+     */
+    public static void downloadExcel(Workbook excel, HttpServletResponse response, String excelName) {
+        if (excel instanceof XSSFWorkbook) {
+            excelName += ".xlsx";
+        } else if (excel instanceof HSSFWorkbook) {
+            excelName += ".xls";
+        } else {
+            return;
+        }
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment;filename=" + excelName);
         ServletOutputStream out = null;
@@ -183,9 +198,8 @@ public class FileUtil {
             out = response.getOutputStream();
             excel.write(out);
             out.flush();
-
         }catch (Exception e) {
-            e.printStackTrace();
+            return;
         }
         finally {
             try {
@@ -193,9 +207,8 @@ public class FileUtil {
                     out.close();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                return;
             }
-
         }
     }
 }
