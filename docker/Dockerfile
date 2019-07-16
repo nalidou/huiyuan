@@ -7,7 +7,7 @@ COPY start.sh /opt/start.sh
 COPY hosts /opt/hosts
 
 RUN java -version \
-    && ls /opt
+    && ls /opt \
     && chmod +x /opt/start.sh
 
 #RUN cat /data/hosts >> /etc/hosts  ##配置host
