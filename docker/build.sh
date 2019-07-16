@@ -7,6 +7,7 @@ mvn clean
 mvn package -DskipTests
 cp target/*.jar docker/app.jar
 
+cd docker
 docker images
 docker login -u 13552967920 --password 123456
 
