@@ -2,7 +2,7 @@ FROM 13552967920/centos7-jdk8:latest
 #FROM openjdk:8
 MAINTAINER 13552967920@163.com
 
-COPY ../target/*.jar /opt/app.jar
+COPY app.jar /opt/app.jar
 COPY start.sh /opt/start.sh
 COPY hosts /opt/hosts
 

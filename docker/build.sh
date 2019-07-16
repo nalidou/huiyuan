@@ -1,6 +1,12 @@
 IMAGE_NAME="huiyuan"
 TAG="1.0"
 
+cd ..
+git pull
+mvn clean
+mvn package -DskipTests
+cp target/*.jar docker/app.jar
+
 docker images
 docker login -u 13552967920 --password 123456
 
